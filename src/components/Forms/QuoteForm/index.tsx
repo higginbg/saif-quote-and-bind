@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FormEvent, useEffect } from 'react';
 
 import useForm from '../../../hooks/useForm';
 import quoteForm from '../../../configs/forms/quoteForm';
@@ -27,6 +27,15 @@ const QuoteForm = () => {
     console.log('Response data', responseData);
   };
 
+  const claimsFiled = formState.find((field) => field.name === 'claimsFiled');
+
+  useEffect(() => {
+    const hasClaims = +(claimsFiled!.value || 0) > 0;
+    if (hasClaims) {
+      alert('Please contact us directly to continue with your quote.');
+    }
+  }, [claimsFiled]);
+
   if (error) {
     return <h2>An error has occured. Please try again later.</h2>;
   }
@@ -40,18 +49,20 @@ const QuoteForm = () => {
           <div className={styles.FormContainer}>
             <h2 className={styles.Title}>Tell us about your business</h2>
             <form onSubmit={handleSubmit}>
-              {formState.map(({ name, label, value, required, error, Component }) => (
-                <Component
-                  key={name}
-                  name={name}
-                  label={label}
-                  disabled={loading}
-                  required={required}
-                  error={error}
-                  value={value as string | undefined}
-                  updateValueAndError={onChange}
-                />
-              ))}
+              {formState.map(
+                ({ name, label, value, required, error, Component }) => (
+                  <Component
+                    key={name}
+                    name={name}
+                    label={label}
+                    disabled={loading}
+                    required={required}
+                    error={error}
+                    value={value as string | undefined}
+                    updateValueAndError={onChange}
+                  />
+                )
+              )}
               <div style={{ marginTop: 50 }}>
                 {submitTried && !isValid && (
                   <p className={styles.Error}>
