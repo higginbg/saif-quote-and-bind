@@ -8,6 +8,7 @@ import styles from './styles.module.scss';
 
 class DateInput extends InputBase<InputProps> {
   private _validateErrorMessage = 'Please enter a valid date.';
+  private _minDate = new Date().toISOString().slice(0, 10);
 
   constructor(props: InputProps) {
     super(props);
@@ -24,6 +25,13 @@ class DateInput extends InputBase<InputProps> {
   getErrorMessage(value: string) {
     if (!this.validate(value)) {
       return this._validateErrorMessage;
+    }
+
+    const selectedDay = new Date(value);
+    const today = new Date();
+
+    if (selectedDay < today) {
+      return `Please enter a date after ${this._minDate}.`;
     }
   }
 
@@ -46,7 +54,7 @@ class DateInput extends InputBase<InputProps> {
           id={`input_${name}`}
           inputMode='numeric'
           type='date'
-          min={new Date().toISOString().slice(0, 10)}
+          min={this._minDate}
           className={`${styles.Input} ${error ? styles.Error : ''}`}
           name={name}
           value={value}
