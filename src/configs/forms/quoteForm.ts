@@ -1,5 +1,5 @@
 import components from '../../components/Inputs';
-import Form from '../../models/Form';
+import { Form } from '../../models/Form';
 
 const { TextInput, NumberInput, PhoneInput, DateInput, CheckInput } = components;
 

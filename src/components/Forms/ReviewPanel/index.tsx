@@ -1,17 +1,17 @@
-import { FormState } from '../../../hooks/useForm';
+import { Form } from '../../../models/Form';
 
 import styles from './styles.module.scss';
 
 interface Props {
   title: string;
-  formState: FormState;
+  form: Form;
   submitted?: boolean;
 }
 
-const ReviewPanel = ({ title, formState, submitted = false }: Props) => (
+const ReviewPanel = ({ title, form, submitted = false }: Props) => (
   <div className={`${styles.Panel} ${!submitted ? styles.Border : ''}`}>
     <h2 className={styles.Title}>{title}</h2>
-    {formState.map(({ name, reviewLabel, label, value, error }) => {
+    {form.map(({ name, reviewLabel, label, value, error }) => {
       let displayValue = value as string | JSX.Element;
       if (!value) {
         displayValue = '-';

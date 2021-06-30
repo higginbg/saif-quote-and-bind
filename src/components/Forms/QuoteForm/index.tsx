@@ -10,7 +10,7 @@ const postEndpoint = 'https://jsonplaceholder.typicode.com/posts';
 
 const QuoteForm = () => {
   const {
-    formState,
+    form,
     onChange,
     loading,
     error,
@@ -23,11 +23,11 @@ const QuoteForm = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    const responseData = await onSubmit(formState);
+    const responseData = await onSubmit(form);
     console.log('Response data', responseData);
   };
 
-  const claimsFiled = formState.find((field) => field.name === 'claimsFiled');
+  const claimsFiled = form.find((field) => field.name === 'claimsFiled');
 
   useEffect(() => {
     const hasClaims = +(claimsFiled!.value || 0) > 0;
@@ -44,12 +44,12 @@ const QuoteForm = () => {
     <div className={styles.Wrapper}>
       {!isSubmitted ? (
         <>
-          <ReviewPanel title='My information' formState={formState} />
+          <ReviewPanel title='My information' form={form} />
 
           <div className={styles.FormContainer}>
             <h2 className={styles.Title}>Tell us about your business</h2>
             <form onSubmit={handleSubmit}>
-              {formState.map(
+              {form.map(
                 ({ name, label, value, required, error, Component }) => (
                   <Component
                     key={name}
@@ -92,7 +92,7 @@ const QuoteForm = () => {
         <div className={`${styles.FormContainer} ${styles.Submitted}`}>
           <ReviewPanel
             title='Form submitted successfully!'
-            formState={formState}
+            form={form}
             submitted
           />
         </div>

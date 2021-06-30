@@ -1,5 +1,3 @@
 import { Input } from "./Inputs";
 
-type Form = Input[];
-
-export default Form;
+export type Form = Input[];
