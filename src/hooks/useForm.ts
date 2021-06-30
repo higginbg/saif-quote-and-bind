@@ -1,15 +1,59 @@
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 import { UpdateValueAndError } from '../components/Inputs/InputBase';
 import { Input } from '../models/Inputs';
 
 export type FormState = Input[];
 
-const useForm = (initialState: FormState, endpoint: string) => {
-  const [formState, setFormState] = useState(initialState);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [submitTried, setSubmitTried] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+type State = {
+  loading: boolean;
+  error: string;
+  submitTried: boolean;
+  isSubmitted: boolean;
+};
+
+enum ActionEnum {
+  SetError = 'SET_ERROR',
+  StartSubmit = 'START_SUBMIT',
+  SubmitSuccess = 'SUBMIT_SUCCESS',
+}
+
+type Action =
+  | { type: ActionEnum.SetError; message: string }
+  | { type: ActionEnum.StartSubmit; isValid: boolean }
+  | { type: ActionEnum.SubmitSuccess };
+
+const initialState: State = {
+  loading: false,
+  error: '',
+  submitTried: false,
+  isSubmitted: false,
+};
+
+type Reducer = (state: State, action: Action) => State;
+
+const reducer: Reducer = (state, action) => {
+  let updatedState: State = state;
+
+  switch (action.type) {
+    case ActionEnum.SetError:
+      updatedState = { ...state, error: action.message };
+      return updatedState;
+    case ActionEnum.StartSubmit:
+      updatedState = { ...state, submitTried: true, loading: action.isValid };
+      return updatedState;
+    case ActionEnum.SubmitSuccess:
+      updatedState = { ...state, isSubmitted: true, loading: false };
+      return updatedState;
+    default:
+      return updatedState;
+  }
+};
+
+const useForm = (initialFormState: FormState, endpoint: string) => {
+  const [formState, setFormState] = useState(initialFormState);
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const { loading, error, submitTried, isSubmitted } = state;
 
   const requiredCount = formState.filter((field) => field.required).length;
   const isValid =
@@ -25,19 +69,25 @@ const useForm = (initialState: FormState, endpoint: string) => {
         body: JSON.stringify(payload),
       });
       if (!response.ok) {
-        setError('An error has occured. Please try again later.');
+        dispatch({
+          type: ActionEnum.SetError,
+          message: 'An error has occured. Please try again later.',
+        });
       }
+      dispatch({ type: ActionEnum.SubmitSuccess });
       const data = await response.json();
       return data;
     } catch (err) {
-      setError(err);
+      dispatch({
+        type: ActionEnum.SetError,
+        message: err,
+      });
     }
   };
 
   const setValidateMessages = () => {
     setFormState((prevFormState) => {
       const newFormState = prevFormState.map((field) => {
-        console.log(field.name, field.value);
         const shouldSetError = field.required && !field.value && !field.error;
         if (shouldSetError) {
           return { ...field, error: 'This field is required' };
@@ -62,21 +112,16 @@ const useForm = (initialState: FormState, endpoint: string) => {
   };
 
   const onSubmit = async (payload: FormState) => {
-    setSubmitTried(true);
+    dispatch({ type: ActionEnum.StartSubmit, isValid });
 
     if (!isValid) {
       setValidateMessages();
       return;
     }
 
-    setLoading(true);
-
     const dataToPost = payload.map(({ name, value }) => ({ name, value }));
 
     const responseData = await postData(dataToPost);
-
-    setLoading(false);
-    setIsSubmitted(true);
 
     return responseData;
   };
