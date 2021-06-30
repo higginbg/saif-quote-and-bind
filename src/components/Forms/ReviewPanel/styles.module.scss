@@ -1,0 +1,40 @@
+.Panel {
+  width: 400px;
+  align-self: flex-start;
+  
+  &.Border {
+    border-bottom: 2px solid #dfdede;
+  }
+}
+
+.Title {
+  font-family: 'Rokkitt', 'Verdana', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+
+  &::after {
+    content: "";
+    display: block;
+    width: 30px;
+    height: 3px;
+    background-color: #0085c7;
+    margin-top: 10px;
+  }
+}
+
+.ReviewLabel {
+  font-size: 1em;
+  font-weight: 400;
+  margin-top: 2em;
+  margin-bottom: 2px;
+  padding-bottom: 0;
+}
+
+.Value {
+  color: #7d7b7b;
+}
+
+.Error {
+  font-size: 0.75em;
+  margin-top: 3px;
+  color: #0085c7;
+}

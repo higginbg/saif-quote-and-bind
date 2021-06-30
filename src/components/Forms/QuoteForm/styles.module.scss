@@ -1,0 +1,52 @@
+.Wrapper {
+  display: flex;
+}
+
+.FormContainer {
+  background-color: white;
+  border-radius: 7px;
+  padding: 1em;
+  width: 100%;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);
+
+  &.Submitted {
+    width: 60%;
+    margin-left: 20%;
+  }
+
+  .Title {
+    font-family: 'Rokkitt', 'Verdana', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    color: #558712;
+    margin-bottom: 1.5em;
+  }
+
+  .Button {
+    display: block;
+    width: 100%;
+    background-color: #558712;
+    color: white;
+    font-size: 1em;
+    font-weight: 100;
+    padding: 10px;
+    border-radius: 9999px;
+    border: none;
+    margin-top: 1em;
+    cursor: pointer;
+    transition: 300ms ease-in-out;
+
+    &:hover {
+      opacity: 0.75;
+    }
+
+    &:disabled,
+    &.Disabled {
+      background-color: #7d7b7b;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.Error {
+  color: #0085c7;
+}

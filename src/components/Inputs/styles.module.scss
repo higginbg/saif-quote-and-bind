@@ -1,0 +1,98 @@
+.Wrapper {
+  margin-bottom: 4em;
+}
+
+.Input {
+  background-color: #ffffff;
+  border: #9e9c9c solid 1px;
+  border-radius: 8px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 12px;
+  width: 100%;
+  color: #747272;
+  padding: 16px;
+
+  &:disabled {
+    cursor: not-allowed;
+    border-color: rgba(238, 238, 238, 0.93333);
+  }
+
+  &:focus {
+    border-color: #747272;
+    outline: none;
+  }
+
+  &.Error {
+    border: 1px solid #0085c7;
+
+    &:focus {
+      border-color: #747272;
+    }
+  }
+}
+
+.Label {
+  font-weight: 600;
+  font-size: 16px;
+  color: #4c4949;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.Required {
+  color: #0085c7;
+}
+
+.ErrorMessage {
+  font-size: 0.75em;
+  margin-top: 5px;
+  color: #0085c7;
+}
+
+.Phone {
+  display: flex;
+
+  .Input {
+    width: 60%;
+    margin-right: 5px;
+  }
+}
+
+.Ext {
+  position: relative;
+
+  .Input {
+    width: 100%;
+  }
+
+  .Optional {
+    font-size: 0.75em;
+    position: absolute;
+    bottom: -20px;
+    color: #9e9c9c;
+    left: 0;
+  }
+}
+
+.CheckBox {
+  cursor: pointer;
+  margin-top: 10px;
+
+  &:hover .Box {
+    color: #558712;
+  }
+  
+  .Box {
+    transition: color 300ms ease-in-out;
+
+    &.Checked {
+      color: #558712;
+    }
+  }
+
+  .Agree {
+    margin-left: 5px;
+  }
+}
