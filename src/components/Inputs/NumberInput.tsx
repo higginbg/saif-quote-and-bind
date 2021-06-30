@@ -23,7 +23,7 @@ class NumberInput<T extends NumberInputProps, P> extends InputBase<T, P> {
   }
 
   getErrorMessage(value = '') {
-    const { name, required, options = {} } = this.props;
+    const { required, options = {} } = this.props;
     const { min, max } = options;
 
     let errorMsg;
