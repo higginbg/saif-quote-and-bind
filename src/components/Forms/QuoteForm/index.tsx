@@ -5,6 +5,7 @@ import quoteForm from '../../../configs/forms/quoteForm';
 
 import styles from './styles.module.scss';
 import ReviewPanel from '../ReviewPanel';
+import { componentConfig } from '../../../models/Inputs';
 
 const postEndpoint = 'https://jsonplaceholder.typicode.com/posts';
 
@@ -32,7 +33,7 @@ const QuoteForm = () => {
   useEffect(() => {
     const hasClaims = +(claimsFiled!.value || 0) > 0;
     if (hasClaims) {
-      alert('Please contact us directly to continue with your quote.');
+      window.alert('Please contact us directly to continue with your quote.');
     }
   }, [claimsFiled]);
 
@@ -50,18 +51,22 @@ const QuoteForm = () => {
             <h2 className={styles.Title}>Tell us about your business</h2>
             <form onSubmit={handleSubmit}>
               {form.map(
-                ({ name, label, value, required, error, Component }) => (
-                  <Component
-                    key={name}
-                    name={name}
-                    label={label}
-                    disabled={loading}
-                    required={required}
-                    error={error}
-                    value={value as string | undefined}
-                    updateValueAndError={onChange}
-                  />
-                )
+                ({ name, label, value, required, error, componentType }) => {
+                  const InputComponent = componentConfig[componentType];
+
+                  return (
+                    <InputComponent
+                      key={name}
+                      name={name}
+                      label={label}
+                      disabled={loading}
+                      required={required}
+                      error={error}
+                      value={value as string | undefined}
+                      updateValueAndError={onChange}
+                    />
+                  );
+                }
               )}
               <div style={{ marginTop: 50 }}>
                 {submitTried && !isValid && (

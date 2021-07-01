@@ -13,6 +13,7 @@ export const postData = async (
     });
     if (!response.ok) {
       errorCallback();
+      return;
     }
     successCallback();
     const data = await response.json();

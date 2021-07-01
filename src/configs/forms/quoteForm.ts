@@ -1,7 +1,4 @@
-import components from '../../components/Inputs';
 import { Form } from '../../models/Form';
-
-const { TextInput, NumberInput, PhoneInput, DateInput, CheckInput } = components;
 
 const config: Form = [
   {
@@ -9,34 +6,34 @@ const config: Form = [
     label: 'Registered business name',
     reviewLabel: 'Business name',
     required: true,
-    Component: TextInput,
+    componentType: 'text_input',
   },
   {
     name: 'businessPhone',
     label: 'Business phone',
     required: true,
-    Component: PhoneInput,
+    componentType: 'phone_input',
   },
   {
     name: 'policyStart',
     label: 'When do you want your policy to start?',
     reviewLabel: 'Policy start date',
     required: true,
-    Component: DateInput,
+    componentType: 'date_input',
   },
   {
     name: 'claimsFiled',
     label: 'How many claims has your business had in the past five years?',
     reviewLabel: 'Previous claims',
     required: true,
-    Component: NumberInput,
+    componentType: 'number_input',
   },
   {
     name: 'attestation',
     label: 'This information is true.',
     reviewLabel: 'Approved',
     required: true,
-    Component: CheckInput,
+    componentType: 'check_input',
   },
 ];
 
