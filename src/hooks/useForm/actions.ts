@@ -1,9 +1,9 @@
 export enum Actions {
-  UpdateValueAndError = 'UPDATE_VALUE_AND_ERROR',
-  Validate = 'VALIDATE',
-  SetError = 'SET_ERROR',
-  StartSubmit = 'START_SUBMIT',
-  SubmitSuccess = 'SUBMIT_SUCCESS',
+  UpdateValueAndError,
+  Validate,
+  SetError,
+  StartSubmit,
+  SubmitSuccess,
 }
 
 export type Action =
